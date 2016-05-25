@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 
 ApplicationWindow {
 	id: mainWindow
-	title: "MIDISynq"
+	title: "MIDI Sync"
 
 	width: 268
 	height: 268
@@ -27,10 +27,22 @@ ApplicationWindow {
 		onTriggered: Qt.quit();
 	}
 
+	Action {
+		id: refreshDeviceListAction
+		text: qsTr("&Refresh")
+		tooltip: qsTr("Refresh device list")
+		shortcut: "CTRL+R"
+		onTriggered: controlLayer.refreshDeviceList();
+	}
+
 	menuBar: MenuBar {
 		Menu {
 			title: qsTr("&File");
 			MenuItem { action: quitApplicationAction }
+		}
+		Menu {
+			title: qsTr("&Device")
+			MenuItem { action: refreshDeviceListAction }
 		}
 	}
 

@@ -5,6 +5,7 @@
 #include <smidi/MidiDeviceEnumerator.h>
 #include "model/DeviceModel.h"
 #include "model/Device.h"
+#include "control/SyncControl.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,12 +14,13 @@ int main(int argc, char *argv[])
 
 	DeviceModel model;
 	MidiDeviceEnumerator enumerator;
-	for (const std::string& deviceName : enumerator.deviceNames())
-	{
-		model.deviceAppeared(QString::fromUtf8(deviceName.c_str()));
-	}
+	SyncControl control(enumerator, model);
+
+	// intial device list update
+	control.refreshDeviceList();
 
 	engine.rootContext()->setContextProperty("deviceModel", &model);
+	engine.rootContext()->setContextProperty("controlLayer", &control);
 
 	engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
 	return app.exec();

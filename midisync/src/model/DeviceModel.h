@@ -1,3 +1,5 @@
+#pragma once
+
 #include <QAbstractListModel>
 #include <QModelIndex>
 #include <QHash>
