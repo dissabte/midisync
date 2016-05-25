@@ -1,0 +1,5 @@
+[submodule "external/smidi"]
+	path = external/smidi
+	url = https://github.com/dissabte/smidi.git
+[submodule "smidi"]
+	branch = sync
