@@ -1,6 +1,8 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
+import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.3
+import MidiSync 1.0
 
 Column {
 	id: mainView
@@ -34,7 +36,10 @@ Column {
 				editable: false
 				model: deviceModel
 				textRole: "name"
-				onAccepted: { }
+
+				property Property selectedDeviceIndex: stateMap.getProperty("/SyncControl/SelectedDeviceIndex")
+
+				onCurrentIndexChanged: { selectedDeviceIndex.value = currentIndex; }
 			}
 		}
 	}
@@ -66,6 +71,8 @@ Column {
 					stepSize: 1.0
 					minimumValue: minBpm
 					maximumValue: maxBpm
+					property Property selectedBPM: stateMap.getProperty("/SyncControl/SelectedBPM")
+					onValueChanged: selectedBPM.value = value
 				}
 
 				Label {
@@ -76,20 +83,20 @@ Column {
 
 			Button {
 				id: startSyncButton
-				text: qsTr("Start")
 				Layout.fillWidth: true
+				action: actions.startSync
 			}
 
 			Button {
 				id: stopSyncButton
-				text: qsTr("Stop")
 				Layout.fillWidth: true
+				action: actions.stopSync
 			}
 
 			Button {
 				id: restartSyncButton
-				text: qsTr("Restart")
 				Layout.fillWidth: true
+				action: actions.restartSync
 			}
 		}
 	}

@@ -1,27 +1,31 @@
 #pragma once
 
-#include <QObject>
 #include <smidi/MidiDeviceEnumerator.h>
 #include "../model/DeviceModel.h"
+#include "../statemap/StateNode.h"
 
 
-class SyncControl : public QObject
+class SyncControl : public StateNode
 {
 	Q_OBJECT
 public:
-	explicit SyncControl(MidiDeviceEnumerator& enumerator, DeviceModel& model, QObject* parent = nullptr);
+	explicit SyncControl(DeviceModel& model, StateMap* stateMap);
 	virtual ~SyncControl();
 
-signals:
-	void refreshDeviceList();
-	void startSync(int deviceIndex, float bpm);
-	void stopSync(int deviceIndex, float bpm);
-	void restartSync(int deviceIndex, float bpm);
-
-public slots:
+private slots:
 	void onRefreshDeviceList();
+	void onStartSync();
+	void onStopSync();
+	void onRestartSync();
 
 private:
-	MidiDeviceEnumerator& _enumerator;
-	DeviceModel& _model;
+	DeviceModel&         _model;
+	MidiDeviceEnumerator _enumerator;
+
+	Property* _pSelectedDeviceIndex;
+	Property* _pSelectedBPM;
+	Property* _pRefreshDeviceList;
+	Property* _pStartSync;
+	Property* _pStopSync;
+	Property* _pRestartSync;
 };

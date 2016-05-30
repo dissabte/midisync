@@ -19,30 +19,16 @@ ApplicationWindow {
 
 	SystemPalette { id: systemPaletteActive; colorGroup: SystemPalette.Active }
 
-	Action {
-		id: quitApplicationAction
-		text: qsTr("&Quit")
-		tooltip: qsTr("Quit the application")
-		shortcut: StandardKey.Quit
-		onTriggered: Qt.quit();
-	}
-
-	Action {
-		id: refreshDeviceListAction
-		text: qsTr("&Refresh")
-		tooltip: qsTr("Refresh device list")
-		shortcut: "CTRL+R"
-		onTriggered: controlLayer.refreshDeviceList();
-	}
+	ActionContainer { id: actions }
 
 	menuBar: MenuBar {
 		Menu {
 			title: qsTr("&File");
-			MenuItem { action: quitApplicationAction }
+			MenuItem { action: actions.quitApplicationAction }
 		}
 		Menu {
 			title: qsTr("&Device")
-			MenuItem { action: refreshDeviceListAction }
+			MenuItem { action: actions.refreshDeviceListAction }
 		}
 	}
 
