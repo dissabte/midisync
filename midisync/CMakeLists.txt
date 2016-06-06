@@ -9,6 +9,10 @@ project(${APP_NAME})
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 set(CMAKE_AUTOMOC ON)
 
+if(LINUX)
+	add_definitions(-Wall -Werror)
+endif(LINUX)
+
 file(GLOB_RECURSE MIDISYNC_INCLUDE_FILES "src/*.h")
 file(GLOB_RECURSE MIDISYNC_SOURCE_FILES "src/*.cpp")
 file(GLOB_RECURSE MIDISYNC_QML_FILES "resources/*.qml")

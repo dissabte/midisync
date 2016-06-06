@@ -30,10 +30,10 @@ Item {
 		onTriggered: stateMap.getProperty("/SyncControl/StopSync").value = true
 	}
 
-	property Action restartSync: Action {
-		text: qsTr("R&estart")
-		tooltip: qsTr("Restart sending MBC")
+	property Action resumeSync: Action {
+		text: qsTr("R&esume")
+		tooltip: qsTr("Resume sending MBC")
 		shortcut: "CTRL+E"
-		onTriggered: stateMap.getProperty("/SyncControl/RestartSync").value = true
+		onTriggered: stateMap.getProperty("/SyncControl/ResumeSync").value = true
 	}
 }

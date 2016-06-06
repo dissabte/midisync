@@ -37,9 +37,9 @@ Column {
 				model: deviceModel
 				textRole: "name"
 
-				property Property selectedDeviceIndex: stateMap.getProperty("/SyncControl/SelectedDeviceIndex")
+				property Property selectedDeviceName: stateMap.getProperty("/SyncControl/SelectedDeviceName")
 
-				onCurrentIndexChanged: { selectedDeviceIndex.value = currentIndex; }
+				onCurrentTextChanged: { selectedDeviceName.value = currentText; }
 			}
 		}
 	}
@@ -72,7 +72,11 @@ Column {
 					minimumValue: minBpm
 					maximumValue: maxBpm
 					property Property selectedBPM: stateMap.getProperty("/SyncControl/SelectedBPM")
-					onValueChanged: selectedBPM.value = value
+					property Property updateSync: stateMap.getProperty("/SyncControl/UpdateSync")
+					onValueChanged: {
+						selectedBPM.value = value;
+						updateSync.value = true;
+					}
 				}
 
 				Label {
@@ -94,9 +98,9 @@ Column {
 			}
 
 			Button {
-				id: restartSyncButton
+				id: resumeSyncButton
 				Layout.fillWidth: true
-				action: actions.restartSync
+				action: actions.resumeSync
 			}
 		}
 	}

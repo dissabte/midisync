@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 	StateMap stateMap;
 	SyncControl control(model, &stateMap);
 
-	//control.refreshDeviceList(); // intial device list update
+	control.refreshDeviceList(); // intial device list update
 
 	engine.rootContext()->setContextProperty("deviceModel", &model);
 	engine.rootContext()->setContextProperty("stateMap", &stateMap);
