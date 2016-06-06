@@ -34,10 +34,10 @@ Column {
 					right: parent.right
 				}
 				editable: false
-				model: deviceModel
+				model: app.model
 				textRole: "name"
 
-				property Property selectedDeviceName: stateMap.getProperty("/SyncControl/SelectedDeviceName")
+				property Property selectedDeviceName: app.stateMap.getProperty("/DeviceControl/SelectedDeviceName")
 
 				onCurrentTextChanged: { selectedDeviceName.value = currentText; }
 			}
@@ -71,8 +71,8 @@ Column {
 					stepSize: 1.0
 					minimumValue: minBpm
 					maximumValue: maxBpm
-					property Property selectedBPM: stateMap.getProperty("/SyncControl/SelectedBPM")
-					property Property updateSync: stateMap.getProperty("/SyncControl/UpdateSync")
+					property Property selectedBPM: app.stateMap.getProperty("/DeviceControl/SelectedBPM")
+					property Property updateSync: app.stateMap.getProperty("/DeviceControl/UpdateSync")
 					onValueChanged: {
 						selectedBPM.value = value;
 						updateSync.value = true;

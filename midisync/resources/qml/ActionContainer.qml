@@ -13,27 +13,27 @@ Item {
 		text: qsTr("&Refresh")
 		tooltip: qsTr("Refresh device list")
 		shortcut: "CTRL+R"
-		onTriggered: stateMap.getProperty("/SyncControl/RefreshDeviceList").value = true
+		onTriggered: app.stateMap.getProperty("/DeviceControl/RefreshDeviceList").value = true
 	}
 
 	property Action startSync: Action {
 		text: qsTr("&Start")
 		tooltip: qsTr("Start sending MBC")
 		shortcut: "CTRL+S"
-		onTriggered: stateMap.getProperty("/SyncControl/StartSync").value = true
+		onTriggered: app.stateMap.getProperty("/DeviceControl/StartSync").value = true
 	}
 
 	property Action stopSync: Action {
 		text: qsTr("S&top")
 		tooltip: qsTr("Stop sending MBC")
 		shortcut: "CTRL+T"
-		onTriggered: stateMap.getProperty("/SyncControl/StopSync").value = true
+		onTriggered: app.stateMap.getProperty("/DeviceControl/StopSync").value = true
 	}
 
 	property Action resumeSync: Action {
 		text: qsTr("R&esume")
 		tooltip: qsTr("Resume sending MBC")
 		shortcut: "CTRL+E"
-		onTriggered: stateMap.getProperty("/SyncControl/ResumeSync").value = true
+		onTriggered: app.stateMap.getProperty("/DeviceControl/ResumeSync").value = true
 	}
 }

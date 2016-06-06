@@ -5,12 +5,12 @@
 #include "../statemap/StateNode.h"
 
 
-class SyncControl : public StateNode
+class DeviceControl : public StateNode
 {
 	Q_OBJECT
 public:
-	explicit SyncControl(DeviceModel& model, StateMap* stateMap);
-	virtual ~SyncControl();
+	explicit DeviceControl(StateNode* parent, StateMap* stateMap, DeviceModel& model);
+	virtual ~DeviceControl();
 
 	void refreshDeviceList();
 

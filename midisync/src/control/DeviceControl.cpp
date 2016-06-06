@@ -1,11 +1,11 @@
-#include "SyncControl.h"
+#include "DeviceControl.h"
 #include "../statemap/Property.h"
 #include <smidi/MidiDevice.h>
 #include <smidi/MidiOutPort.h>
 #include <QDebug>
 
-SyncControl::SyncControl(DeviceModel& model, StateMap* stateMap)
-    : StateNode(nullptr, stateMap, QStringLiteral("SyncControl"))
+DeviceControl::DeviceControl(StateNode* parent, StateMap* stateMap, DeviceModel& model)
+    : StateNode(parent, stateMap, QStringLiteral("DeviceControl"))
     , _model(model)
     , _enumerator()
 {
@@ -17,18 +17,18 @@ SyncControl::SyncControl(DeviceModel& model, StateMap* stateMap)
 	_pResumeSync = registerProperty("ResumeSync", QVariant::fromValue(false));
 	_pUpdateSync = registerProperty("UpdateSync", QVariant::fromValue(false));
 
-	connect(_pRefreshDeviceList, &Property::valueChanged, this, &SyncControl::onRefreshDeviceList);
-	connect(_pStartSync, &Property::valueChanged, this, &SyncControl::onStartSync);
-	connect(_pStopSync, &Property::valueChanged, this, &SyncControl::onStopSync);
-	connect(_pResumeSync, &Property::valueChanged, this, &SyncControl::onResumeSync);
-	connect(_pUpdateSync, &Property::valueChanged, this, &SyncControl::onUpdateSync);
+	connect(_pRefreshDeviceList, &Property::valueChanged, this, &DeviceControl::onRefreshDeviceList);
+	connect(_pStartSync, &Property::valueChanged, this, &DeviceControl::onStartSync);
+	connect(_pStopSync, &Property::valueChanged, this, &DeviceControl::onStopSync);
+	connect(_pResumeSync, &Property::valueChanged, this, &DeviceControl::onResumeSync);
+	connect(_pUpdateSync, &Property::valueChanged, this, &DeviceControl::onUpdateSync);
 }
 
-SyncControl::~SyncControl()
+DeviceControl::~DeviceControl()
 {
 }
 
-void SyncControl::refreshDeviceList()
+void DeviceControl::refreshDeviceList()
 {
 	_enumerator.updateDeviceList();
 	_model.clear();
@@ -38,7 +38,7 @@ void SyncControl::refreshDeviceList()
 	}
 }
 
-void SyncControl::onRefreshDeviceList()
+void DeviceControl::onRefreshDeviceList()
 {
 	if (_pRefreshDeviceList->value().toBool())
 	{
@@ -47,7 +47,7 @@ void SyncControl::onRefreshDeviceList()
 	}
 }
 
-void SyncControl::onStartSync()
+void DeviceControl::onStartSync()
 {
 	if (_pStartSync->value().toBool())
 	{
@@ -63,7 +63,7 @@ void SyncControl::onStartSync()
 	}
 }
 
-void SyncControl::onStopSync()
+void DeviceControl::onStopSync()
 {
 	if (_pStopSync->value().toBool())
 	{
@@ -79,7 +79,7 @@ void SyncControl::onStopSync()
 
 }
 
-void SyncControl::onResumeSync()
+void DeviceControl::onResumeSync()
 {
 	if (_pResumeSync->value().toBool())
 	{
@@ -94,7 +94,7 @@ void SyncControl::onResumeSync()
 	}
 }
 
-void SyncControl::onUpdateSync()
+void DeviceControl::onUpdateSync()
 {
 	if (_pUpdateSync->value().toBool())
 	{
