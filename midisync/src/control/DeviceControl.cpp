@@ -1,8 +1,8 @@
 #include "DeviceControl.h"
 #include "../statemap/Property.h"
+#include "../statemap/StateMap.h"
 #include <smidi/MidiDevice.h>
 #include <smidi/MidiOutPort.h>
-#include <QDebug>
 
 DeviceControl::DeviceControl(StateNode* parent, StateMap* stateMap, DeviceModel& model)
     : StateNode(parent, stateMap, QStringLiteral("DeviceControl"))
@@ -22,6 +22,9 @@ DeviceControl::DeviceControl(StateNode* parent, StateMap* stateMap, DeviceModel&
 	connect(_pStopSync, &Property::valueChanged, this, &DeviceControl::onStopSync);
 	connect(_pResumeSync, &Property::valueChanged, this, &DeviceControl::onResumeSync);
 	connect(_pUpdateSync, &Property::valueChanged, this, &DeviceControl::onUpdateSync);
+
+	_pUSBDevicesChanged = stateMap->getProperty("/HotPlugControl/USBDevicesChanged");
+	connect(_pUSBDevicesChanged, &Property::valueChanged, this, &DeviceControl::onUSBDevicesChanged);
 }
 
 DeviceControl::~DeviceControl()
@@ -107,5 +110,14 @@ void DeviceControl::onUpdateSync()
 			sync.changeSyncBpm(bpm);
 		}
 		_pUpdateSync->setValue(false);
+	}
+}
+
+void DeviceControl::onUSBDevicesChanged()
+{
+	if (_pUSBDevicesChanged->value().toBool())
+	{
+		refreshDeviceList();
+		_pUSBDevicesChanged->setValue(false);
 	}
 }

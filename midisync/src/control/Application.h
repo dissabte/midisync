@@ -5,9 +5,7 @@
 #include "../model/DeviceModel.h"
 #include "../statemap/StateMap.h"
 #include "DeviceControl.h"
-
-class DeviceControl;
-class PreferencesControl;
+#include "HotPlugControl.h"
 
 class Application : public QObject
 {
@@ -27,7 +25,8 @@ signals:
 	void modelChanged();
 
 private:
-	StateMap      _stateMap;
-	DeviceModel   _model;
-	DeviceControl _deviceControl;
+	StateMap       _stateMap;
+	DeviceModel    _model;
+	HotPlugControl _hotPlugControl;
+	DeviceControl  _deviceControl;
 };

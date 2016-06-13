@@ -20,6 +20,7 @@ private slots:
 	void onStopSync();
 	void onResumeSync();
 	void onUpdateSync();
+	void onUSBDevicesChanged();
 
 private:
 	DeviceModel&         _model;
@@ -32,4 +33,5 @@ private:
 	Property* _pStopSync;
 	Property* _pResumeSync;
 	Property* _pUpdateSync;
+	Property* _pUSBDevicesChanged;
 };

@@ -4,12 +4,13 @@
 
 Application::Application()
     : QObject(nullptr)
-    , _stateMap(this)
-    , _model(this)
+    , _stateMap(nullptr)
+    , _model(nullptr)
+    , _hotPlugControl(nullptr, &_stateMap)
     , _deviceControl(nullptr, &_stateMap, _model)
 {
 	QQmlEngine::setObjectOwnership(&_model, QQmlEngine::CppOwnership);
-
+	QQmlEngine::setObjectOwnership(&_stateMap, QQmlEngine::CppOwnership);
 	_deviceControl.refreshDeviceList();
 }
 

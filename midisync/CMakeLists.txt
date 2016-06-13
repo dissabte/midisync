@@ -23,6 +23,10 @@ if(NOT SMIDI_FOUND)
 	include(../external/smidi.cmake)
 endif()
 
+if(NOT HOTPLUG_FOUND)
+	include(../external/hotplug.cmake)
+endif()
+
 find_package(Qt5Quick)
 find_package(Qt5Widgets)
 
@@ -39,7 +43,7 @@ if (Qt5Quick_FOUND AND Qt5Widgets_FOUND)
 
 	add_dependencies(${APP_NAME} midiSyncGenerateQRC smidi)
 
-	target_link_libraries(${APP_NAME} Qt5::Quick Qt5::Widgets smidi pthread asound)
+	target_link_libraries(${APP_NAME} Qt5::Quick Qt5::Widgets smidi hotplug pthread asound)
 else()
 	message(WARNING "Qt not found")
 endif()

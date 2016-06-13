@@ -7,13 +7,13 @@ ApplicationWindow {
 	title: "MIDI Sync"
 
 	width: 268
-	height: 268
+	height: 300
 
 	minimumWidth: 268
-	minimumHeight: 268
+	minimumHeight: 300
 
 	maximumWidth: 268
-	maximumHeight: 268
+	maximumHeight: 300
 
 	visible: true
 
