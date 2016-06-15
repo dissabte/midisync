@@ -19,12 +19,16 @@ file(GLOB_RECURSE MIDISYNC_QML_FILES "resources/*.qml")
 
 set(MIDISYNC_SOURCES ${MIDISYNC_INCLUDE_FILES} ${MIDISYNC_SOURCE_FILES})
 
-if(NOT SMIDI_FOUND)
-	include(../external/smidi.cmake)
+if(NOT UNITTEST_CPP_FOUND)
+	include(../external/unittest-cpp.cmake)
 endif()
 
 if(NOT HOTPLUG_FOUND)
 	include(../external/hotplug.cmake)
+endif()
+
+if(NOT SMIDI_FOUND)
+	include(../external/smidi.cmake)
 endif()
 
 find_package(Qt5Quick)
@@ -41,11 +45,16 @@ if (Qt5Quick_FOUND AND Qt5Widgets_FOUND)
 
 	add_executable(${APP_NAME} ${MIDISYNC_SOURCES} ${UI_RESOURCES})
 
-	add_dependencies(${APP_NAME} midiSyncGenerateQRC smidi)
+	add_dependencies(${APP_NAME} midiSyncGenerateQRC hotplug smidi)
 
 	target_link_libraries(${APP_NAME} Qt5::Quick Qt5::Widgets smidi hotplug pthread asound)
 else()
 	message(WARNING "Qt not found")
+endif()
+
+if(UNITTEST_CPP_FOUND)
+	add_dependencies(${APP_NAME} UnitTest++)
+	add_subdirectory("tests")
 endif()
 
 message(STATUS "Processing ${APP_NAME} is done")
