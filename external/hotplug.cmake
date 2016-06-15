@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 
-set(HOTPLUG_ROOT "${CMAKE_SOURCE_DIR}/../../hotplug/hotplug")
+set(HOTPLUG_ROOT "${CMAKE_SOURCE_DIR}/../external/hotplug/hotplug")
 
 if(EXISTS ${HOTPLUG_ROOT}/CMakeLists.txt)
 	set(HOTPLUG_FOUND ON)

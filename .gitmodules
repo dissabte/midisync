@@ -3,3 +3,6 @@
 	url = https://github.com/dissabte/smidi.git
 [submodule "smidi"]
 	branch = sync
+[submodule "external/hotplug"]
+	path = external/hotplug
+	url = https://github.com/dissabte/hotplug.git
