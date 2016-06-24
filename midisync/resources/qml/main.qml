@@ -1,19 +1,19 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.3
+import MidiSync 1.0
 
 ApplicationWindow {
 	id: mainWindow
 	title: "MIDI Sync"
 
 	width: 268
-	height: 300
+	height: 210
 
-	minimumWidth: 268
-	minimumHeight: 300
-
-	maximumWidth: 268
-	maximumHeight: 300
+	minimumWidth: width
+	minimumHeight: height
+	maximumWidth: minimumWidth
+	maximumHeight: minimumHeight
 
 	visible: true
 
@@ -39,11 +39,23 @@ ApplicationWindow {
 		}
 	}
 
+	property Property pSyncIsStarted: app.stateMap.getProperty("/DeviceControl/SyncIsStarted")
+	property bool syncIsStarted: pSyncIsStarted ? pSyncIsStarted.value : false
+
+	property Property pSelectedBPM: app.stateMap.getProperty("/DeviceControl/SelectedBPM")
+	property real selectedBPM: pSelectedBPM ? pSelectedBPM.value : 0
+
 	statusBar: StatusBar {
 		RowLayout {
 			anchors.fill: parent
 			Label {
-				text: "Not sending MBC"
+				text: {
+					if (syncIsStarted) {
+						"Sending MBC at " + selectedBPM;
+					} else {
+						"Not sending MBC"
+					}
+				}
 			}
 		}
 	}

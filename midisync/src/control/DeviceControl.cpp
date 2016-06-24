@@ -14,13 +14,13 @@ DeviceControl::DeviceControl(StateNode* parent, StateMap* stateMap, DeviceModel&
 	_pRefreshDeviceList = registerProperty("RefreshDeviceList", QVariant::fromValue(false));
 	_pStartSync = registerProperty("StartSync", QVariant::fromValue(false));
 	_pStopSync = registerProperty("StopSync", QVariant::fromValue(false));
-	_pResumeSync = registerProperty("ResumeSync", QVariant::fromValue(false));
 	_pUpdateSync = registerProperty("UpdateSync", QVariant::fromValue(false));
+
+	_pSyncIsStarted = registerProperty("SyncIsStarted", QVariant::fromValue(false));
 
 	connect(_pRefreshDeviceList, &Property::valueChanged, this, &DeviceControl::onRefreshDeviceList);
 	connect(_pStartSync, &Property::valueChanged, this, &DeviceControl::onStartSync);
 	connect(_pStopSync, &Property::valueChanged, this, &DeviceControl::onStopSync);
-	connect(_pResumeSync, &Property::valueChanged, this, &DeviceControl::onResumeSync);
 	connect(_pUpdateSync, &Property::valueChanged, this, &DeviceControl::onUpdateSync);
 
 	_pUSBDevicesChanged = stateMap->getProperty("/HotPlugControl/USBDevicesChanged");
@@ -61,6 +61,7 @@ void DeviceControl::onStartSync()
 		{
 			MidiSync& sync = device->outputPorts()[0]->sync();
 			sync.startSync(bpm);
+			_pSyncIsStarted->setValue(true);
 		}
 		_pStartSync->setValue(false);
 	}
@@ -76,25 +77,11 @@ void DeviceControl::onStopSync()
 		{
 			MidiSync& sync = device->outputPorts()[0]->sync();
 			sync.stopSync();
+			_pSyncIsStarted->setValue(false);
 		}
 		_pStopSync->setValue(false);
 	}
 
-}
-
-void DeviceControl::onResumeSync()
-{
-	if (_pResumeSync->value().toBool())
-	{
-		const QString deviceName = _pSelectedDeviceName->value().toString();
-		std::shared_ptr<MidiDevice> device = _enumerator.createDevice(deviceName.toUtf8().constData());
-		if (device && device->outputPorts().size() > 0)
-		{
-			MidiSync& sync = device->outputPorts()[0]->sync();
-			sync.resumeSync();
-		}
-		_pResumeSync->setValue(false);
-	}
 }
 
 void DeviceControl::onUpdateSync()

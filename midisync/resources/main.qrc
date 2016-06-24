@@ -3,5 +3,7 @@
         <file>qml/main.qml</file>
         <file>qml/MainView.qml</file>
         <file>qml/ActionContainer.qml</file>
+        <file>img/play.png</file>
+        <file>img/stop.png</file>
     </qresource>
 </RCC>

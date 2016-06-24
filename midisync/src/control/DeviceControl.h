@@ -18,7 +18,6 @@ private slots:
 	void onRefreshDeviceList();
 	void onStartSync();
 	void onStopSync();
-	void onResumeSync();
 	void onUpdateSync();
 	void onUSBDevicesChanged();
 
@@ -31,7 +30,7 @@ private:
 	Property* _pRefreshDeviceList;
 	Property* _pStartSync;
 	Property* _pStopSync;
-	Property* _pResumeSync;
 	Property* _pUpdateSync;
 	Property* _pUSBDevicesChanged;
+	Property* _pSyncIsStarted;
 };

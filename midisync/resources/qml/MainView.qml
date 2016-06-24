@@ -9,7 +9,7 @@ Column {
 	spacing: 10
 
 	property real minBpm: 30.0
-	property real maxBpm: 350.0
+	property real maxBpm: 250.0
 
 	Row {
 		id: deviceControls
@@ -24,7 +24,7 @@ Column {
 
 			Label {
 				id: selectDeviceText
-				text: qsTr("Select MIDI Device:")
+				text: qsTr("MIDI Device:")
 			}
 
 			ComboBox {
@@ -44,63 +44,66 @@ Column {
 		}
 	}
 
-	GroupBox {
-		title: "Sync"
+	Column {
 		anchors {
 			left: parent.left
 			right: parent.right
 		}
 
-		ColumnLayout {
-			spacing: 6
-			anchors {
-				left: parent.left
-				right: parent.right
+		Label {
+			text: qsTr("BPM:")
+		}
+
+		Item {
+			width: parent.width
+			height: bpmSlider.height
+
+			Slider {
+				id: bpmSlider
+				anchors {
+					left: parent.left
+					right: bpmLabel.left
+					rightMargin: 6
+				}
+
+				value: 120.0
+				stepSize: 1.0
+				minimumValue: minBpm
+				maximumValue: maxBpm
+				property Property pSelectedBPM: app.stateMap.getProperty("/DeviceControl/SelectedBPM")
+				property Property pUpdateSync: app.stateMap.getProperty("/DeviceControl/UpdateSync")
+				onValueChanged: {
+					pSelectedBPM.value = value;
+					pUpdateSync.value = true;
+				}
 			}
 
 			Label {
-				text: qsTr("BPM:")
-			}
-
-			Row {
-				spacing: 6
-
-				Slider {
-					id: bpmSlider
-					value: 120.0
-					stepSize: 1.0
-					minimumValue: minBpm
-					maximumValue: maxBpm
-					property Property selectedBPM: app.stateMap.getProperty("/DeviceControl/SelectedBPM")
-					property Property updateSync: app.stateMap.getProperty("/DeviceControl/UpdateSync")
-					onValueChanged: {
-						selectedBPM.value = value;
-						updateSync.value = true;
-					}
+				id: bpmLabel
+				anchors {
+					right: parent.right
+					verticalCenter: bpmSlider.verticalCenter
 				}
-
-				Label {
-					anchors.verticalCenter: bpmSlider.verticalCenter
-					text: "" + bpmSlider.value
-				}
+				text: "" + bpmSlider.value
 			}
+		}
+
+		Row {
+			width: parent.width
+			spacing: 3
 
 			Button {
-				id: startSyncButton
-				Layout.fillWidth: true
+				id: startStopSyncButton
+				width: parent.width / 2 - 1
+				height: width / 3
 				action: actions.startSync
 			}
 
 			Button {
 				id: stopSyncButton
-				Layout.fillWidth: true
+				width: parent.width / 2 - 2
+				height: width / 3
 				action: actions.stopSync
-			}
-
-			Button {
-				id: resumeSyncButton
-				Layout.fillWidth: true
-				action: actions.resumeSync
 			}
 		}
 	}
